@@ -1,7 +1,7 @@
 # When updating the version of BigBang, make sure to update
 #   both the bases reference and the GitRepository reference
 bases:
-- https://repo1.dso.mil/platform-one/big-bang/bigbang.git/base?ref=2.27.0
+- https://repo1.dso.mil/platform-one/big-bang/bigbang.git/base?ref=2.30.0
 # - helmrepo.yaml
 # - cosignsecret.yaml
 configMapGenerator:
