@@ -207,7 +207,7 @@ git push --set-upstream origin template-demo
 
 ### Add TLS Certificates
 
-The `base/configmap.yaml` is setup to use the domain `bigbang.dev` by default. (Which results in sites that look like this: `https://*.bigbang.dev`) A demo TLS wildcard certificate is provided in `base/bigbang-dev-cert.yaml` to use.
+The `base/configmap.yaml` is setup to use the domain `dev.bigbang.mil` by default. (Which results in sites that look like this: `https://*.dev.bigbang.mil`) A demo TLS wildcard certificate is provided in `base/bigbang-dev-cert.yaml` to use.
 
 #### Important Security Note
 
@@ -225,7 +225,7 @@ sops -e bigbang-dev-cert.yaml > secrets.enc.yaml
 
 # Save encrypted TLS certificate into Git
 git add secrets.enc.yaml
-git commit -m "chore: add bigbang.dev tls certificates"
+git commit -m "chore: add dev.bigbang.mil tls certificates"
 git push
 ```
 
@@ -499,9 +499,9 @@ Big Bang follows a [GitOps](https://www.weave.works/blog/what-is-gitops-really) 
    # Watch deployment
    watch kubectl get hr,po -A
 
-   # Test deployment by opening a browser to "kiali.bigbang.dev" to get to the Kiali application deployed by Istio.
-   # Note that the owner of "bigbang.dev" has setup the domain to point to 127.0.0.1 for this type of testing.
-   # If you are deployed on a remote host you will need to point "kiali.bigbang.dev" to your cluster master node via your /etc/hosts file
+   # Test deployment by opening a browser to "kiali.dev.bigbang.mil" to get to the Kiali application deployed by Istio.
+   # Note that the owner of "dev.bigbang.mil" has setup the domain to point to 127.0.0.1 for this type of testing.
+   # If you are deployed on a remote host you will need to point "kiali.dev.bigbang.mil" to your cluster master node via your /etc/hosts file
    ```
 
    > If you cannot get to the main page of Kiali, it may be due to an expired certificate.  Check the expiration of the certificate in `base/configmap.yaml`.
@@ -535,7 +535,7 @@ You now have successfully deployed Big Bang.  Your next step is to customize the
    # Watch deployment for twistlock to be deployed
    watch kubectl get hr,po -A
 
-   # Test deployment by opening a browser to "twistlock.bigbang.dev" to get to the Twistlock application
+   # Test deployment by opening a browser to "twistlock.dev.bigbang.mil" to get to the Twistlock application
    ```
 
 ### Update the Big Bang Version
@@ -585,7 +585,7 @@ When you are done testing, you can update the reference in `base` (and delete th
 
 ### Update the domain
 
-Big Bang deploys applications to `*.bigbang.dev` by default.  You can override the `bigbang.dev` domain to your domain by updating `base/configmap.yaml` and adding the following:
+Big Bang deploys applications to `*.dev.bigbang.mil` by default.  You can override the `dev.bigbang.mil` domain to your domain by updating `base/configmap.yaml` and adding the following:
 
 ```yaml
 domain: insert-your-domain-here

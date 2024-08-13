@@ -1,19 +1,21 @@
 # When updating the version of BigBang, make sure to update
 #   both the bases reference and the GitRepository reference
-bases:
-- https://repo1.dso.mil/platform-one/big-bang/bigbang.git/base?ref=2.33.0
 # - helmrepo.yaml
 # - cosignsecret.yaml
 configMapGenerator:
-  - name: common
-    behavior: merge
-    files:
-      - values.yaml=configmap.yaml
-patchesStrategicMerge:
-- secrets.enc.yaml
+- behavior: merge
+  files:
+  - values.yaml=configmap.yaml
+  name: common
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- https://repo1.dso.mil/platform-one/big-bang/bigbang.git/base?ref=2.33.0
+patches:
+- patch: secrets.enc.yaml
 # Enable this section if you wish to use the OCI HelmRepo with Cosign Verfiy instead of the GitRepository.
 # - |-
-#   apiVersion: helm.toolkit.fluxcd.io/v2beta2
+#   apiVersion: helm.toolkit.fluxcd.io/v2
 #   kind: HelmRelease
 #   metadata:
 #     name: bigbang
