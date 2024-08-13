@@ -195,7 +195,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - Fix namespace error (istio-system) when deploying wildcard-cert
-- Updated expired certificate for *.bigbang.dev
+- Updated expired certificate for *.dev.bigbang.mil
 - Added default values for `istio.ingress.tls.*` to workaround Helm error on `nil` values.
 - Updated [README.md](./README.md) for TLS cert
 - Updated [README.md](./README.md) for sops key creation (Issue #8)

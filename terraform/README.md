@@ -285,7 +285,7 @@ export ELBIP=`dig $LBDNS +short | head -1`
 
 # Now add the hostname of the web application into /etc/hosts (or `C:\Windows\System32\drivers\etc\hosts` on Windows)
 # You may need to log out and back into for hosts to take effect
-printf "\nAdd the following line to /etc/hosts to alias Big Bang core products:\n${ELBIP}    twistlock.bigbang.dev kibana.bigbang.dev prometheus.bigbang.dev grafana.bigbang.dev tracing.bigbang.dev kiali.bigbang.dev alertmanager.bigbang.dev\n\n"
+printf "\nAdd the following line to /etc/hosts to alias Big Bang core products:\n${ELBIP}    twistlock.dev.bigbang.mil kibana.dev.bigbang.mil prometheus.dev.bigbang.mil grafana.dev.bigbang.mil tracing.dev.bigbang.mil kiali.dev.bigbang.mil alertmanager.dev.bigbang.mil\n\n"
 ```
 
 ## Terraform Destroy
