@@ -21,7 +21,7 @@ patches:
   # Use the following three lines to test a new version of Big Bang without affecting other environments
   #   ref:
   #     $patch: replace
-  #     tag: "2.33.0"
+  #     tag: "2.36.0"
 - patch: |-
     apiVersion: helm.toolkit.fluxcd.io/v2
     kind: HelmRelease
