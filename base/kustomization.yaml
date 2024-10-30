@@ -1,3 +1,4 @@
+
 # When updating the version of BigBang, make sure to update
 #   both the bases reference and the GitRepository reference
 # - helmrepo.yaml
@@ -12,7 +13,7 @@ kind: Kustomization
 resources:
 - https://repo1.dso.mil/platform-one/big-bang/bigbang.git/base?ref=2.38.0
 patches:
-- patch: secrets.enc.yaml
+- path: secrets.enc.yaml
 # Enable this section if you wish to use the OCI HelmRepo with Cosign Verfiy instead of the GitRepository.
 # - |-
 #   apiVersion: helm.toolkit.fluxcd.io/v2
