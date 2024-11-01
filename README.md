@@ -122,8 +122,10 @@ gpg --version | head -n 1
 # compatibility with sops and older clients using gpg 2.0.x - 2.2.x
 # gpg 2.2.x users should also user the following key gen multiline command
 # gpg 2.0.x users substitute --full-generate-key for --gen-key
-#
-# Using this multiline command to generate the key makes it work in all cases.
+
+# Use the following command to generate a compatible key.
+# Compatibility issues may arise with GPG versions older than 2.4.3 unless explicitly specified above.
+
 gpg --batch --full-generate-key --rfc4880 --digest-algo sha512 --cert-digest-algo sha512 <<EOF
     %no-protection
     # %no-protection: means the private key won't be password protected
