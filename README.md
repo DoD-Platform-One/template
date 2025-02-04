@@ -385,7 +385,7 @@ The BigBang Chart is available to be deployed from either Git (GitRepository) or
 
     Update `base/kustomization.yaml` to enable/add `helmrepo.yaml` and `cosignsecret.yaml` under the `bases:` section:
 
-    ```
+    ```yaml
     # When updating the version of BigBang, make sure to update
     #   both the bases reference and the GitRepository reference
     bases:
@@ -396,7 +396,7 @@ The BigBang Chart is available to be deployed from either Git (GitRepository) or
 
 1. Enable override to the HelmRelease to use the HelmRepository by updating the `base/kustomization.yaml`:
 
-    ```
+    ```yaml
     patchesStrategicMerge:
     #Enable this section if you wish to use the OCI HelmRepo with Cosign Verfiy instead of the GitRepository.
     - |-
@@ -802,6 +802,6 @@ The [Renovate Deployment](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/d
 
 Once an environment directory has been created from a given strategy directory, the strategy directories can be omitted from renovate update by adding an `ignorePaths` option to the `renovate.json`:
 
-```
+```json
 "ignorePaths": ["package-strategy/**", "umbrella-strategy"],
 ```
