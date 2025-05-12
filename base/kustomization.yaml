@@ -11,7 +11,7 @@ configMapGenerator:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- https://repo1.dso.mil/platform-one/big-bang/bigbang.git/base?ref=2.51.1
+- https://repo1.dso.mil/platform-one/big-bang/bigbang.git/base?ref=2.52.0
 patches:
 - path: secrets.enc.yaml
 # Enable this section if you wish to use the OCI HelmRepo with Cosign Verfiy instead of the GitRepository.
