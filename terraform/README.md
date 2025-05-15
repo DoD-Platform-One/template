@@ -34,6 +34,8 @@ terraform
 - Review the configuration
   - Review [region.yaml](./us-gov-west-1/region.yaml).  Update your deployment region if necessary.
   - Review [env.yaml](./us-gov-west-1/prod/env.yaml).  At a minimum, update `name` to identify your deployment.
+  - Review [terragrunt.hcl](./terragrunt.hcl). Make the `remote_state.config.bucket` name globally unique to satisfy this requirement of S3 buckets. If this step is skipped, the `terragrunt` commands below will fail to locate, create, or access the configuration S3 bucket.
+
 
 - Validate your configuration
 
