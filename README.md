@@ -2,9 +2,11 @@
 
 > _This is a mirror of a government repo hosted on [Repo1](https://repo1.dso.mil/) by [DoD Platform One](http://p1.dso.mil/). Please direct all code changes, issues and comments to <https://repo1.dso.mil/platform-one/big-bang/customers/template>_
 
+If you are new to Big Bang, it is recommended you start with the [Big Bang Quickstart Guide](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/guides/deployment-scenarios/quickstart.md) before customizing this template.
+
 This repository provides a template for managing your Big Bang configurations using Kustomize and GitOps principles with FluxCD. It helps isolate your custom configuration from the core Big Bang product, allowing for easier upgrades and better change management.
 
-If you are new to Big Bang, it is recommended you start with the [Big Bang Quickstart Guide](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/guides/deployment-scenarios/quickstart.md) before customizing this template.
+[[_TOC_]]
 
 ## Prerequisites
 
@@ -20,32 +22,58 @@ Before using this template, ensure you have:
 
 ## Core Concepts
 
-*   **Kustomize:** This template uses Kustomize to manage Kubernetes configurations. It employs a base/overlay structure where common settings reside in `base/` and environment-specific configurations are placed in overlay directories (e.g., `dev/`, `prod/`).
-*   **GitOps:** All configuration is stored in your Git repository. FluxCD runs in your cluster, monitors your repository, and automatically applies changes.
-*   **Structure:**
-    *   `base/`: Common Kustomize resources, configurations (`configmap.yaml`), and encrypted secrets (`secrets.enc.yaml`) shared across all environments.
-    *   `package-strategy/` & `umbrella-strategy/`: Example environment overlays demonstrating different update strategies. You will copy one of these to create your own environment directory (e.g., `dev`).
-*   **Update Strategies:** This template provides examples for two common strategies:
-    *   **Package Strategy (`package-strategy/`):** Prioritizes updating individual applications as soon as new versions are released by Big Bang. This allows for faster adoption of patches and features but involves more frequent, smaller updates. Can be automated with tools like Renovate.
-    *   **Umbrella Strategy (`umbrella-strategy/`):** Updates all applications based on new official Big Bang releases. This ensures applications are tested together by the Big Bang team but means updates are larger and less frequent.
+### Kustomize
+
+This template uses Kustomize to manage Kubernetes configurations. It employs a base/overlay structure where common settings reside in `base/` and environment-specific configurations are placed in overlay directories (e.g., `dev/`, `prod/`).
+
+### GitOps 
+
+All configurations are stored in your Git repository. FluxCD runs in your cluster, monitors your repository, and automatically applies changes.
+
+### Folder and File Structure
+
+*   `base/`: Common Kustomize resources, configurations (`configmap.yaml`), and encrypted secrets (`secrets.enc.yaml`) shared across all environments.
+*   `package-strategy/` & `umbrella-strategy/`: Example environment overlays demonstrating different update strategies. You will copy one of these to create your own environment directory (e.g., `dev`).
+
+### Update Strategies
+
+This template provides examples for two common strategies:
+*   **Package Strategy (`package-strategy/`):** Prioritizes updating individual applications as soon as new versions are released by Big Bang. This allows for faster adoption of patches and features but involves more frequent, smaller updates. Can be automated with tools like Renovate.
+*   **Umbrella Strategy (`umbrella-strategy/`):** All applications are updated based on new official Big Bang releases. This ensures applications are tested together by the Big Bang team,,,,,,,, but means updates are larger and less frequent.
 
 ### Git Repository Best Practices
 
-- If you plan to deploy clusters to multiple impact levels, then you should follow these best practices:
-  - Have at least one unique git repository for each impact level where a cluster will be deployed to.
-  - Match the IL where the git repository will be hosted to the impact level where the corresponding cluster will be hosted.
-    - Example:
-      The git repository corresponding to an IL4 Cluster Deployment should be hosted on an IL4 approved hosting environment.
-      The Infrastructure as code for an IL4 Cluster Deployment shouldn't be hosted on an IL2 git repository.
-    - The reason for this is that:
-      - Infrastructure as code secrets corresponding to a cluster deployed to IL4 (or IL5), would be considered CUI (Controlled Unclassified Information), and thus should be isolated from IL2.
-      - Even though both IL2 and IL4 secrets would be encrypted, it's still best practice to keep them in separate repositories, because when server side git hooks are not in place, then it's possible for human error to result in a non-encrypted secrets being committed to a git repository.
-      - Any encrypted infrastructure as code secrets added to /base, would get shared by all clusters, if multiple impact levels existed in the same repo, then secrets added to /base could accidentally end up being shared across impact levels.
-- The intent of the /base folder is to allow configuration and in some cases secrets to be shared between clusters.
-  - Examples of how to properly use /base to share a secret between clusters in the same impact level.
-    - If you have several developer sandbox, development, and test clusters operating at IL2, you may wish to have some level of shared configuration between them.
-    - If you have a production and acceptance environment for an IL4 cluster, you may wish for them to share an image pull secret between them.
-- It's worth mentioning that while the above best practices are applicable to the majority of scenarios, Authorizing Officials(AOs) can always choose to make exceptions and accept risks if necessary to meet the needs of unique mission requirements, and the presence of a Cross Domain Solution could also result in nuances.
+### Deploying Clusters Across Multiple Impact Levels
+
+When deploying clusters across various Impact Levels (ILs), it’s important to follow these best practices to maintain appropriate data segregation and minimize risk:
+
+#### Repository Separation
+
+* Maintain a **dedicated Git repository for each Impact Level** where clusters will be deployed. 
+* Ensure that the **repository’s hosting environment matches the cluster’s impact level**.
+
+**Example:** A Git repository managing infrastructure for an **IL4 cluster** must be hosted within an **IL4-approved environment**. Avoid hosting IL4 infrastructure-as-code (IaC) in an **IL2 repository**, as this presents security and compliance concerns.
+
+#### Handling Controlled Information
+ 
+* Infrastructure code for IL4 or IL5 may contain **Controlled Unclassified Information (CUI)**, requiring it to be **isolated from lower ILs**.
+* Even if IL2 and IL4 repositories use encryption, **separation is best practice** — especially when server-side Git hooks are not enforced, which increases the risk of accidentally committing unencrypted secrets.
+* Shared directories like `/base` can unintentionally propagate encrypted secrets across ILs if not managed carefully.
+
+#### Purpose and Use of The `/base` Directory
+
+The `/base` folder is intended for sharing common configuration and secrets among clusters operating at the same Impact Level.
+The intent of the `/base` folder is to allow configuration and in some cases secrets to be shared between clusters.
+
+##### Proper use examples
+
+* **IL2 clusters** (e.g., sandbox, development, and test) can share configuration through `/base`.
+* **IL4 environments** (e.g., production and acceptance) might share an image pull secret using /base.
+* Ensure that `/base` is **never** used to share secrets across different Impact Levels to avoid data leakage or policy violations.
+
+### Additional notes on multi-cluster usage
+
+While these best practices cover most scenarios, **Authorizing Officials (AOs)** have discretion to **accept risk and approve exceptions** to meet specific mission needs. Additionally, the use of a **Cross Domain Solution (CDS)** may introduce unique considerations that justify deviations from standard practices.
 
 ## Getting Started
 
@@ -399,8 +427,9 @@ This template is designed to support multiple deployment environments (e.g., `de
     *   Each environment has its own `bigbang.yaml` file defining the Flux `GitRepository` and `Kustomization` resources specific to that environment (pointing to the correct path like `./dev` or `./prod`). Deploy the appropriate `bigbang.yaml` to the cluster to manage that environment.
 *   **Environment-Specific Values:** Add a `configmap.yaml` and/or `secrets.enc.yaml` (use metadata name `environment-bb`) to the environment directory (e.g., `dev/configmap.yaml`) to provide or override values specific to that environment. Kustomize merges these with the base configurations.
 
-## Adddional SOPS Notes and Advanced Configuration
-- `Sops Note`: [Sops isn't guaranteed to preserve the yaml formatting of a file it encrypts](https://github.com/mozilla/sops/issues/864)
+## Additional SOPS Notes and Advanced Configuration
+
+- `SOPS Note`: [Sops isn't guaranteed to preserve the yaml formatting of a file it encrypts](https://github.com/mozilla/sops/issues/864)
 - `Sops Note`: sops is an abstraction layer that allows several secret backends to be used.
   - AGE and GPG (also known as PGP) are generic cloud agnostic options that have no dependencies. It's important to note that while [the sops repo recommends AGE over PGP](https://github.com/mozilla/sops#22encrypting-using-age), For DoD use cases it's preferable to use GPG, because GPG offers NIST approved crypto algorithms. (AGE is just as secure as GPG; however, AGE's crypto algorithms, X25519 and ChaCha20-Poly1305 are not NIST approved algorithms ([X25519](https://en.wikipedia.org/wiki/Curve25519) is used to generate asymmetric key pairs and [ChaCha20-Poly1305](https://en.wikipedia.org/wiki/ChaCha20-Poly1305) is a symmetric encryption algorithm. The example above has GPG leverage RSA 4096 and AES 256 which are both NIST approved)
   - GPG backed sops is shown as an example above, because it's generic and cloud agnostic.
@@ -420,13 +449,14 @@ This template is designed to support multiple deployment environments (e.g., `de
 
 ## Renovate Bot
 
-As documented in Big Bang, optimally the repository that maintains your GitOps state (this template) is being monitored by a tool such as Renovate to provide alerting and automation around updates for Big Bang and packages.
+As outlined in the Big Bang documentation, the recommended approach is to monitor the repository managing your GitOps state (i.e., this template) using a tool like Renovate. This enables alerting and automation for updates related to both Big Bang and its associated packages.
 
-The [Renovate configuration](./renovate.json) in this repository provides an example that will target Repo1 git repositories for both individual packages as well the Big Bang umbrella chart and provide automated merge requests for updates. If following the `package-strategy` for consuming updates, Renovate will open pull/merge-requests on a per-package basis.
+This repository includes a [Renovate configuration example](./renovate.json) that targets Repo1 Git repositories. It supports updates for individual packages as well as the Big Bang umbrella chart by automatically generating merge requests. When using the package-based update strategy (`package-strategy`), Renovate will create separate pull/merge requests for each package.
 
-The [Renovate Deployment](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/guides/renovate/deployment.md) documentation supports deploying Renovate on a Big Bang cluster that can monitor both this template as well as dependencies in other repositories as a generic capability.
+The [Renovate Deployment documentation](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/guides/renovate/deployment.md)
+provides guidance for deploying Renovate on a Big Bang cluster, enabling it to monitor both this template and dependencies in other repositories as a general-purpose capability.
 
-Once an environment directory has been created from a given strategy directory, the strategy directories can be omitted from renovate update by adding an `ignorePaths` option to the `renovate.json`:
+After an environment directory is generated from a specific strategy directory, you can prevent Renovate from updating the original strategy directories by adding an `ignorePaths` entry to the `renovate.json` configuration file.
 
 ```json
 "ignorePaths": ["package-strategy/**", "umbrella-strategy"],
