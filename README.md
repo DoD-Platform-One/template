@@ -1,6 +1,6 @@
 # Big Bang Customer Template
 
-> _This is a mirror of a government repo hosted on [Repo1](https://repo1.dso.mil/) by [DoD Platform One](http://p1.dso.mil/). Please direct all code changes, issues and comments to <https://repo1.dso.mil/platform-one/big-bang/customers/template>_
+> _This is a mirror of a government repo hosted on [Repo1](https://repo1.dso.mil/) by [DoD Platform One](http://p1.dso.mil/). Please direct all code changes, issues and comments to <https://repo1.dso.mil/big-bang/customers/template>_
 
 If you are new to Big Bang, it is recommended you start with the [Big Bang Quickstart Guide](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/guides/deployment-scenarios/quickstart.md) before customizing this template.
 
@@ -12,7 +12,7 @@ This repository provides a template for managing your Big Bang configurations us
 
 Before using this template, ensure you have:
 
-*   A Kubernetes cluster [ready for Big Bang](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/tree/master/docs/guides/prerequisites).
+*   A Kubernetes cluster [ready for Big Bang](https://repo1.dso.mil/big-bang/bigbang/-/tree/master/docs/prerequisites).
 *   `kubectl` installed and configured to access your cluster.
 *   `git` installed.
 *   `gpg` installed for SOPS encryption.
@@ -241,7 +241,7 @@ These steps deploy FluxCD to your cluster and configure it to manage your Big Ba
         ```bash
         # Find the version ref in base/kustomization.yaml (e.g., ?ref=2.50.0)
         BB_VERSION="X.Y.Z" # Example: BB_VERSION="2.50.0"
-        kubectl apply -k "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux?ref=${BB_VERSION}"
+        kubectl apply -k "https://repo1.dso.mil/big-bang/bigbang.git//base/flux?ref=${BB_VERSION}"
         ```
     *   Wait for the Flux controllers to become ready:
         ```bash
@@ -327,7 +327,7 @@ Modify your Big Bang deployment by making changes in your Git repository. Flux w
         # In base/kustomization.yaml
         bases:
         # Update the tag here VVVVVVV
-        - https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base?ref=NEW_VERSION_TAG
+        - https://repo1.dso.mil/big-bang/bigbang.git//base?ref=NEW_VERSION_TAG
         # ... other bases ...
         ```
     2.  **(If using OCI Source):** If you have configured Big Bang to deploy via OCI HelmRepository (see Advanced), update the `spec.chart.spec.version` in the HelmRelease patch within `base/kustomization.yaml`.
@@ -348,7 +348,7 @@ Modify your Big Bang deployment by making changes in your Git repository. Flux w
 
         # Remove the Big Bang git base from the 'bases:' list if using OCI exclusively
         # bases:
-        # - https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base?ref=X.Y.Z # <-- REMOVE THIS LINE
+        # - https://repo1.dso.mil/big-bang/bigbang.git//base?ref=X.Y.Z # <-- REMOVE THIS LINE
         ```
     2.  Apply a patch in `base/kustomization.yaml` to modify the main `bigbang` HelmRelease to use the `HelmRepository` source and enable verification.
         ```yaml

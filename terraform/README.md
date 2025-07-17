@@ -1,6 +1,6 @@
 # Big Bang Infrastructure as Code (IaC)
 
-> _This is a mirror of a government repo hosted on [Repo1](https://repo1.dso.mil/) by [DoD Platform One](http://p1.dso.mil/).  Please direct all code changes, issues and comments to <https://repo1.dso.mil/platform-one/big-bang/customers/template>_
+> _This is a mirror of a government repo hosted on [Repo1](https://repo1.dso.mil/) by [DoD Platform One](http://p1.dso.mil/).  Please direct all code changes, issues and comments to <https://repo1.dso.mil/big-bang/customers/template>_
 
 [[_TOC_]]
 
@@ -99,7 +99,7 @@ The infrastructure is now setup.  You still need to configure the Big Bang speci
 
 ## Big Bang Cluster Pre-Requisites
 
-Prior to installing Big Bang, there are a few cluster agnostic specific pre-requisites that must be set up before proceeding, these are outlined below, or on Big Bang's [prerequisites page](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/tree/master/docs/guides/prerequisites).
+Prior to installing Big Bang, there are a few cluster agnostic specific pre-requisites that must be set up before proceeding, these are outlined below, or on Big Bang's [prerequisites page](https://repo1.dso.mil/big-bang/bigbang/-/tree/master/docs/prerequisites).
 Prior to deploying Big Bang, you should setup the following in the Kubernetes cluster created by the [Quickstart](#quickstart).
 
 ### Storage Class

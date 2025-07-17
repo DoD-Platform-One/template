@@ -15,10 +15,13 @@ flux:
 kiali:
   enabled: false
 
-istio:
+istiod:
   enabled: true
 
-istioOperator:
+istioCRDs:
+  enabled: true
+
+istioGateway:
   enabled: true
 
 monitoring:
