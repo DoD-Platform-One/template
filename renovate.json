@@ -1,42 +1,59 @@
 {
-    "baseBranches": ["main"],
+    "baseBranches": [
+        "main"
+    ],
     "configWarningReuseIssue": false,
     "dependencyDashboard": true,
     "dependencyDashboardHeader": "- [ ] Sync upstream versions with updated dependencies.",
     "dependencyDashboardTitle": "Renovate: Upgrade Package Dependencies",
     "draftPR": false,
-    "enabledManagers": ["regex"],
-    "labels": ["renovate"],
+    "enabledManagers": [
+        "custom.regex"
+    ],
+    "labels": [
+        "renovate"
+    ],
     "commitMessagePrefix": "",
     "packageRules": [
         {
             "groupName": "Big Bang",
-            "matchDatasources": ["git-tags"]
+            "matchDatasources": [
+                "git-tags"
+            ]
         }
     ],
-    "regexManagers": [
+    "customManagers": [
         {
-            "fileMatch": ["^base/kustomization\\.yaml$"],
+            "customType": "regex",
+            "fileMatch": [
+                "^base/kustomization\\.yaml$"
+            ],
             "matchStrings": [
-              ".+?ref=+(?<currentValue>.+)"
+                ".+?ref=+(?<currentValue>.+)"
             ],
             "depNameTemplate": "https://repo1.dso.mil/big-bang/bigbang.git",
             "datasourceTemplate": "git-tags",
             "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
         },
         {
-            "fileMatch": ["^*/kustomization\\.yaml$"],
+            "customType": "regex",
+            "fileMatch": [
+                "^*/kustomization\\.yaml$"
+            ],
             "matchStrings": [
-              "tag:\\s+\"(?<currentValue>.+)\""
+                "tag:\\s+\"(?<currentValue>.+)\""
             ],
             "depNameTemplate": "https://repo1.dso.mil/big-bang/bigbang.git",
             "datasourceTemplate": "git-tags",
             "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
         },
         {
-            "fileMatch": ["^*/configmap\\.yaml$"],
+            "customType": "regex",
+            "fileMatch": [
+                "^*/configmap\\.yaml$"
+            ],
             "matchStrings": [
-              "git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
+                "git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
             ],
             "datasourceTemplate": "git-tags",
             "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
