@@ -1,0 +1,26 @@
+## Set all sourceType to helmRepo
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: staging-bb
+  namespace: bigbang
+data:
+  values.yaml: |
+    networkPolicies:
+      enabled: false
+
+    istiod:
+      sourceType: "helmRepo"
+      enabled: true
+
+    istioCRDs:
+      sourceType: "helmRepo"
+      enabled: true
+
+    istioGateway:
+      sourceType: "helmRepo"
+      enabled: true
+      values:
+        gateways:
+          passthrough:
+            upstream:

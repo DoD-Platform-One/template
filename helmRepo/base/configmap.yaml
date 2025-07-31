@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-bb
+  namespace: bigbang
+data:
+  values.yaml: |
+    domain: dev.bigbang.mil
