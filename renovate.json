@@ -25,8 +25,8 @@
     "customManagers": [
         {
             "customType": "regex",
-            "fileMatch": [
-                "^base/kustomization\\.yaml$"
+            "managerFilePatterns": [
+                "/^base/kustomization\\.yaml$/"
             ],
             "matchStrings": [
                 ".+?ref=+(?<currentValue>.+)"
@@ -37,8 +37,8 @@
         },
         {
             "customType": "regex",
-            "fileMatch": [
-                "^*/kustomization\\.yaml$"
+            "managerFilePatterns": [
+                "/^*/kustomization\\.yaml$/"
             ],
             "matchStrings": [
                 "tag:\\s+\"(?<currentValue>.+)\""
@@ -49,8 +49,8 @@
         },
         {
             "customType": "regex",
-            "fileMatch": [
-                "^*/configmap\\.yaml$"
+            "managerFilePatterns": [
+                "/^*/configmap\\.yaml$/"
             ],
             "matchStrings": [
                 "git:\\s+repo:\\s+(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
