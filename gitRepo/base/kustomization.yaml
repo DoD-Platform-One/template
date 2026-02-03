@@ -9,4 +9,4 @@ kind: Kustomization
 resources:
 - https://repo1.dso.mil/platform-one/big-bang/bigbang.git/base?ref=3.2.0
 patches:
-- path: common-bb-secret.yaml
+- path: common-bb-secret.enc.yaml
